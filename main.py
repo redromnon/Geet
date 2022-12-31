@@ -15,6 +15,9 @@ def main(page: ft.Page):
     
 
     #ACTIONS
+    music.createcache()
+
+
     def play(e):
         
         loadbar.width = 450
