@@ -7,6 +7,7 @@ def main(page: ft.Page):
     bgcolor = "#100017"
     primary = "#41005E"
     secondary = "#F1DEFA"
+    tertiary = "#B19FF9"
     
     #PAGE SETUP
     page.title = "Geet"
@@ -32,8 +33,8 @@ def main(page: ft.Page):
         song.src = url + music.getaudio()
         
         #Update music player
-        current_song.title = ft.Text(e.control.data[0], max_lines=2, overflow="ellipsis")
-        current_song.subtitle = ft.Text(e.control.data[1])
+        current_song.title = ft.Text(e.control.data[0], max_lines=2, overflow="ellipsis", color=ft.colors.WHITE)
+        current_song.subtitle = ft.Text(e.control.data[1], color=ft.colors.WHITE70)
         
         #Play the song
         song.play()
@@ -61,7 +62,7 @@ def main(page: ft.Page):
                 
                 song_item = ft.ListTile(width=450)
                 song_item.title = ft.Text(song["title"], color=secondary)
-                song_item.subtitle = ft.Text(song["artists"][0]["name"])
+                song_item.subtitle = ft.Text(song["artists"][0]["name"], color=tertiary)
                 song_item.data = [song["title"], song["artists"][0]["name"], song["videoId"]]
                 song_item.on_click = play
 
@@ -134,12 +135,12 @@ def main(page: ft.Page):
     #Search Box
     search_box = ft.TextField(filled=True, border_width=2, border_radius=20, 
     hint_text="Enter a song name", width=450, prefix_icon=ft.icons.SEARCH_ROUNDED,
-    on_submit=listsongs, focused_border_color=secondary, selection_color=secondary)
+    on_submit=listsongs, focused_border_color=secondary, focused_color=secondary, selection_color=secondary)
 
 
     #Music Player
-    current_song = ft.ListTile(leading=ft.Icon(ft.icons.MUSIC_NOTE, size=40, color=secondary), title=ft.Text("..."),
-    subtitle=ft.Text("..."), width=200)
+    current_song = ft.ListTile(leading=ft.Icon(ft.icons.MUSIC_NOTE, size=40, color=secondary), title=ft.Text("...", color=ft.colors.WHITE),
+    subtitle=ft.Text("...", color=tertiary), width=250)
 
     playpausebtn = ft.IconButton(icon=ft.icons.PLAY_CIRCLE_ROUNDED, icon_size=30, on_click=play_pause_song, icon_color=secondary)
     
