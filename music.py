@@ -2,6 +2,14 @@ from ytmusicapi import YTMusic
 from pytube import YouTube
 import os
 
+def createcache():
+
+    try:
+        os.makedirs("cache")
+        print("Created cache")
+    except FileExistsError:
+        print("cache present")
+
 def getaudio():
 
     path = os.path.join(os.getcwd(), "cache")
