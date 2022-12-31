@@ -135,7 +135,8 @@ def main(page: ft.Page):
     #Search Box
     search_box = ft.TextField(filled=True, border_width=2, border_radius=20, 
     hint_text="Enter a song name", width=450, prefix_icon=ft.icons.SEARCH_ROUNDED,
-    on_submit=listsongs, focused_border_color=secondary, focused_color=secondary, selection_color=secondary)
+    on_submit=listsongs, focused_border_color=secondary, focused_color=secondary,
+    bgcolor=bgcolor, cursor_color=secondary, selection_color=secondary)
 
 
     #Music Player
