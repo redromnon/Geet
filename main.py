@@ -49,29 +49,30 @@ def main(page: ft.Page):
 
     def listsongs(e):
 
-        loadbar.width = 450
-        page.update()
-        
-        songdict = music.searchsong(search_box.value)
-
-        song_list.controls.clear()
-
-        for song in songdict:
-            
-            song_item = ft.ListTile(width=450)
-            song_item.title = ft.Text(song["title"], color=secondary)
-            song_item.subtitle = ft.Text(song["artists"][0]["name"])
-            song_item.data = [song["title"], song["artists"][0]["name"], song["videoId"]]
-            song_item.on_click = play
-
-            song_list.controls.append(song_item)
-
+        if search_box.value != "":
+            loadbar.width = 450
             page.update()
+            
+            songdict = music.searchsong(search_box.value)
 
-        print("Updated List")
+            song_list.controls.clear()
 
-        loadbar.width = 0
-        page.update()
+            for song in songdict:
+                
+                song_item = ft.ListTile(width=450)
+                song_item.title = ft.Text(song["title"], color=secondary)
+                song_item.subtitle = ft.Text(song["artists"][0]["name"])
+                song_item.data = [song["title"], song["artists"][0]["name"], song["videoId"]]
+                song_item.on_click = play
+
+                song_list.controls.append(song_item)
+
+                page.update()
+
+            print("Updated List")
+
+            loadbar.width = 0
+            page.update()
 
 
     def play_pause_song(e):
@@ -138,7 +139,7 @@ def main(page: ft.Page):
 
     #Music Player
     current_song = ft.ListTile(leading=ft.Icon(ft.icons.MUSIC_NOTE, size=40, color=secondary), title=ft.Text("..."),
-    subtitle=ft.Text("..."), width=300)
+    subtitle=ft.Text("..."), width=200)
 
     playpausebtn = ft.IconButton(icon=ft.icons.PLAY_CIRCLE_ROUNDED, icon_size=30, on_click=play_pause_song, icon_color=secondary)
     
