@@ -36,11 +36,12 @@ def main(page: ft.Page):
         current_song.title = ft.Text(e.control.data[0], max_lines=2, overflow="ellipsis", color=ft.colors.WHITE)
         current_song.subtitle = ft.Text(e.control.data[1], color=ft.colors.WHITE70)
         
-        #Play the song
-        song.play()
+        #Auto-Play the song
+        if page.platform != "ios" and page.platform != "macos":
+            song.play()
+            playpausebtn.icon = ft.icons.PAUSE_CIRCLE_ROUNDED
 
         #Update music player
-        playpausebtn.icon = ft.icons.PAUSE_CIRCLE_ROUNDED
         music_player.disabled = False
 
         loadbar.width = 0
