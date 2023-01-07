@@ -13,6 +13,7 @@ def main(page: ft.Page):
     page.title = "Geet"
     page.horizontal_alignment = "center"
     page.bgcolor = bgcolor
+    page.theme_mode = "dark"
     
 
     #ACTIONS
@@ -34,7 +35,7 @@ def main(page: ft.Page):
         
         #Update music player
         current_song.title = ft.Text(e.control.data[0], max_lines=2, overflow="ellipsis", color=ft.colors.WHITE)
-        current_song.subtitle = ft.Text(e.control.data[1], color=ft.colors.WHITE70)
+        current_song.subtitle = ft.Text(e.control.data[1], max_lines=1, overflow="ellipsis", color=ft.colors.WHITE70)
         
         #Auto-Play the song
         if page.platform != "ios" and page.platform != "macos":
@@ -135,14 +136,14 @@ def main(page: ft.Page):
 
     #Search Box
     search_box = ft.TextField(filled=True, border_width=2, border_radius=20, 
-    hint_text="Enter a song name", width=450, prefix_icon=ft.icons.SEARCH_ROUNDED,
+    hint_text="Enter a song name", width=400, prefix_icon=ft.icons.SEARCH_ROUNDED,
     on_submit=listsongs, focused_border_color=secondary, focused_color=secondary,
     bgcolor=bgcolor, cursor_color=secondary, selection_color=secondary)
 
 
     #Music Player
     current_song = ft.ListTile(leading=ft.Icon(ft.icons.MUSIC_NOTE, size=40, color=secondary), title=ft.Text("...", color=ft.colors.WHITE),
-    subtitle=ft.Text("...", color=tertiary), width=250)
+    subtitle=ft.Text("...", color=tertiary), expand=True)
 
     playpausebtn = ft.IconButton(icon=ft.icons.PLAY_CIRCLE_ROUNDED, icon_size=30, on_click=play_pause_song, icon_color=secondary)
     
@@ -152,9 +153,9 @@ def main(page: ft.Page):
         [
             playpausebtn, repeatbtn
         ],
-        alignment="end"
+        alignment="end", spacing=5
     )
-
+   
     music_player = ft.Container(content=ft.Row(
             [
                 current_song,
