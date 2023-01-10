@@ -121,9 +121,13 @@ def main(page: ft.Page):
     page.overlay.append(song)
     
 
-    #App title
-    app_name = ft.Text("geet", style=ft.TextThemeStyle.HEADLINE_LARGE, size=50, color=ft.colors.WHITE,
-    weight="bold", italic=True)
+    #App Bar
+    app_bar = ft.AppBar(center_title=True, bgcolor=bgcolor)
+
+    app_bar.title = ft.Text("geet", style=ft.TextThemeStyle.HEADLINE_LARGE, color=ft.colors.WHITE,
+    weight="bold", italic=True, size=40)
+
+    app_bar.actions= [ft.TextButton(icon=ft.icons.CODE, icon_color=secondary ,on_click=lambda e: page.launch_url("https://github.com/redromnon/Geet"))]
 
 
     #Loading bar
@@ -169,9 +173,10 @@ def main(page: ft.Page):
 
     #LAYOUT  
     page.add(
+        app_bar,
         ft.Column(
             [
-                app_name, search_box, loadbar, song_list,
+                search_box, loadbar, song_list,
             ],
             horizontal_alignment="center",
             spacing=20, expand=True
