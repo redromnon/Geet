@@ -35,9 +35,24 @@ def resetcache():
 
 
 def searchsong(name):
+    
+    #Get search results
     result = YTMusic().search(query=name, filter="songs")
 
-    return result
+    #Create dict of songs with necessary keys
+    songs_dict = {'songs':[]}
+
+    for song in result:
+
+        current_song_dict = {}
+
+        current_song_dict.update({'name': song['title']})
+        current_song_dict.update({'artists': song['artists'][0]['name']})
+        current_song_dict.update({'videoId': song['videoId']})
+        
+        songs_dict['songs'].append(current_song_dict)
+
+    return songs_dict
 
 
 def dmusic(videoId):

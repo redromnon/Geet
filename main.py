@@ -60,12 +60,12 @@ def main(page: ft.Page):
 
             song_list.controls.clear()
 
-            for song in songdict:
+            for song in songdict['songs']:
                 
                 song_item = ft.ListTile(width=450)
-                song_item.title = ft.Text(song["title"], color=secondary)
-                song_item.subtitle = ft.Text(song["artists"][0]["name"], color=tertiary)
-                song_item.data = [song["title"], song["artists"][0]["name"], song["videoId"]]
+                song_item.title = ft.Text(song['name'], color=secondary)
+                song_item.subtitle = ft.Text(song['artists'], color=tertiary)
+                song_item.data = [song['name'], song['artists'], song['videoId']]
                 song_item.on_click = play
 
                 song_list.controls.append(song_item)
