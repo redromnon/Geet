@@ -10,3 +10,6 @@ A minimalistic frontend for YouTube Music made with Python and Flet.
 ✅ No tracking
 
 ✅ Free and Open-Source
+
+### Issues
+- Not compatible with iOS devices at the moment
