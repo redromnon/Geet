@@ -1,5 +1,5 @@
 import flet as ft
-import music
+import music, tempfile
 
 def main(page: ft.Page):
     
@@ -14,12 +14,8 @@ def main(page: ft.Page):
     page.horizontal_alignment = "center"
     page.bgcolor = bgcolor
     page.theme_mode = "dark"
-    
 
     #ACTIONS
-    music.createcache()
-
-
     def play(e):
         
         loadbar.width = 450
@@ -186,4 +182,14 @@ def main(page: ft.Page):
 
 
     
-ft.app(target=main, assets_dir="cache", view=ft.WEB_BROWSER)
+if __name__ == "__main__":
+
+    #Create temp directory
+    with tempfile.TemporaryDirectory() as music.tmpdir:
+        print(f"Temporary directory created at {music.tmpdir}")
+
+        #Run app
+        ft.app(target=main, assets_dir=music.tmpdir, view=ft.WEB_BROWSER)
+
+        #Cleanup
+        print(f"Deleting {music.tmpdir}")
