@@ -62,7 +62,7 @@ def dmusic(videoId):
     yt = YouTube(videourl)
 
     #Filter stream
-    stream = yt.streams.filter(only_audio=True, file_extension="mp4").last()
+    stream = yt.streams.filter(only_audio=True, file_extension="webm")[1]
     
     #Download stream
     stream.download(output_path="cache/")
