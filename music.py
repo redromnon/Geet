@@ -49,7 +49,10 @@ def searchsong(name):
         current_song_dict.update({'name': song['title']})
         current_song_dict.update({'artists': song['artists'][0]['name']})
         current_song_dict.update({'videoId': song['videoId']})
-        
+        current_song_dict.update({'duration': song['duration']})
+        current_song_dict.update({'isExplicit': "(Explicit) - " if song['isExplicit'] else ""})
+
+
         songs_dict['songs'].append(current_song_dict)
 
     return songs_dict

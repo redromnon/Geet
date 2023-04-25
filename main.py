@@ -29,9 +29,10 @@ def main(page: ft.Page):
         song.release()
         music.resetcache()
 
-        #Download via videoId and set the new song src
+        #Download via videoId, set the new song src & display duration
         music.dmusic(e.control.data[2])
         song.src = url + music.getaudio()
+        total_duration.value = e.control.data[3]
         
         #Update music player
         current_song.title = ft.Text(e.control.data[0], max_lines=2, overflow="ellipsis", color=ft.colors.WHITE)
@@ -64,8 +65,8 @@ def main(page: ft.Page):
                 
                 song_item = ft.ListTile(width=450)
                 song_item.title = ft.Text(song['name'], color=secondary)
-                song_item.subtitle = ft.Text(song['artists'], color=tertiary)
-                song_item.data = [song['name'], song['artists'], song['videoId']]
+                song_item.subtitle = ft.Text(f"{song['duration']} - {song['isExplicit']}{song['artists']}", color=tertiary)
+                song_item.data = [song['name'], song['artists'], song['videoId'], song['duration']]
                 song_item.on_click = play
 
                 song_list.controls.append(song_item)
@@ -112,12 +113,17 @@ def main(page: ft.Page):
             playpausebtn.icon = ft.icons.PLAY_CIRCLE_ROUNDED
             page.update()
 
+    def track_progress(e):
+
+        duration_progress.value = int(e.data)/song.get_duration()
+        page.update()
+
 
     #UI COMPONENTS
     
     #Audio
     url = "../"
-    song = ft.Audio(src=url+music.getaudio(), autoplay=False, on_state_changed=checkstatus)
+    song = ft.Audio(src=url+music.getaudio(), autoplay=False, on_state_changed=checkstatus, on_position_changed=track_progress)
     page.overlay.append(song)
     
 
@@ -146,18 +152,43 @@ def main(page: ft.Page):
 
 
     #Music Player
-    current_song = ft.ListTile(leading=ft.Icon(ft.icons.MUSIC_NOTE, size=40, color=secondary), title=ft.Text("...", color=ft.colors.WHITE),
-    subtitle=ft.Text("...", color=tertiary), expand=True)
+    duration_progress = ft.ProgressRing(stroke_width=5, width=45, height=45, value=0, color=secondary, bgcolor=bgcolor)
+    total_duration = ft.Text(size=12, color=secondary)
 
+    current_duration = ft.Stack(
+        [
+            ft.Container(content=total_duration, left=11, top=14),
+            duration_progress,
+        ]
+    )
+
+    current_song = ft.ListTile(
+        leading=current_duration,
+        title=ft.Text("...", color=ft.colors.WHITE),
+        subtitle=ft.Text("...", color=tertiary), expand=True
+    )
+    
     playpausebtn = ft.IconButton(icon=ft.icons.PLAY_CIRCLE_ROUNDED, icon_size=30, on_click=play_pause_song, icon_color=secondary)
     
     repeatbtn = ft.IconButton(icon=ft.icons.REPEAT_ROUNDED, icon_size=30, on_click=repeat_song, icon_color=secondary)
 
+    forwardbtn = ft.IconButton(
+        icon=ft.icons.FAST_FORWARD_ROUNDED, icon_size=30, 
+        on_click=lambda e: song.seek(song.get_current_position()+5000), 
+        icon_color=secondary
+    )
+
+    rewindbtn = ft.IconButton(
+        icon=ft.icons.FAST_REWIND_ROUNDED, icon_size=30, 
+        on_click=lambda e: song.seek(song.get_current_position()-5000), 
+        icon_color=secondary
+    )
+
     player_button = ft.Row(
         [
-            playpausebtn, repeatbtn
+            playpausebtn, rewindbtn, forwardbtn, repeatbtn
         ],
-        alignment="end", spacing=5
+        alignment="end", spacing=0
     )
    
     music_player = ft.Container(content=ft.Row(
