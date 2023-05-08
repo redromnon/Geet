@@ -1,6 +1,7 @@
 from ytmusicapi import YTMusic
 from pytube import YouTube
 import os
+import json
 
 def createcache():
 
@@ -65,7 +66,7 @@ def dmusic(videoId):
     yt = YouTube(videourl)
 
     #Filter stream
-    stream = yt.streams.filter(only_audio=True, file_extension="webm")[1]
+    stream = yt.streams.filter(only_audio=True, file_extension="webm").last()
     
     #Download stream
     stream.download(output_path="cache/")

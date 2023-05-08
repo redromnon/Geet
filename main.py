@@ -32,11 +32,10 @@ def main(page: ft.Page):
         #Download via videoId, set the new song src & display duration
         music.dmusic(e.control.data[2])
         song.src = url + music.getaudio()
-        total_duration.value = e.control.data[3]
         
         #Update music player
         current_song.title = ft.Text(e.control.data[0], max_lines=2, overflow="ellipsis", color=ft.colors.WHITE)
-        current_song.subtitle = ft.Text(e.control.data[1], max_lines=1, overflow="ellipsis", color=ft.colors.WHITE70)
+        current_song.subtitle = ft.Text(f"{e.control.data[3]} - {e.control.data[1]}", max_lines=1, overflow="ellipsis", color=ft.colors.WHITE70)
         
         #Auto-Play the song
         if page.platform != "ios" and page.platform != "macos":
@@ -153,11 +152,10 @@ def main(page: ft.Page):
 
     #Music Player
     duration_progress = ft.ProgressRing(stroke_width=5, width=45, height=45, value=0, color=secondary, bgcolor=bgcolor)
-    total_duration = ft.Text(size=12, color=secondary)
 
     current_duration = ft.Stack(
         [
-            ft.Container(content=total_duration, left=11, top=14),
+            ft.Container(content=ft.Icon(name=ft.icons.MUSIC_NOTE_ROUNDED, size=30, color=secondary), left=8, top=7),
             duration_progress,
         ]
     )
@@ -168,20 +166,22 @@ def main(page: ft.Page):
         subtitle=ft.Text("...", color=tertiary), expand=True
     )
     
-    playpausebtn = ft.IconButton(icon=ft.icons.PLAY_CIRCLE_ROUNDED, icon_size=30, on_click=play_pause_song, icon_color=secondary)
+    playpausebtn = ft.IconButton(icon=ft.icons.PLAY_CIRCLE_ROUNDED, icon_size=30, on_click=play_pause_song, icon_color=secondary, tooltip="Play/Pause")
     
-    repeatbtn = ft.IconButton(icon=ft.icons.REPEAT_ROUNDED, icon_size=30, on_click=repeat_song, icon_color=secondary)
+    repeatbtn = ft.IconButton(icon=ft.icons.REPEAT_ROUNDED, icon_size=30, on_click=repeat_song, icon_color=secondary, tooltip="Repeat")
 
     forwardbtn = ft.IconButton(
         icon=ft.icons.FAST_FORWARD_ROUNDED, icon_size=30, 
         on_click=lambda e: song.seek(song.get_current_position()+5000), 
-        icon_color=secondary
+        icon_color=secondary,
+        tooltip="Move forward 5 sec"
     )
 
     rewindbtn = ft.IconButton(
         icon=ft.icons.FAST_REWIND_ROUNDED, icon_size=30, 
         on_click=lambda e: song.seek(song.get_current_position()-5000), 
-        icon_color=secondary
+        icon_color=secondary,
+        tooltip="Move back 5 sec"
     )
 
     player_button = ft.Row(
