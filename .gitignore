@@ -1,6 +1,7 @@
 __pycache__
 venv
 *.mp4
+/cache
 
 #Replit
 *.replit

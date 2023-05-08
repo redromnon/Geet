@@ -1,6 +1,7 @@
 from ytmusicapi import YTMusic
 from pytube import YouTube
 import os
+import json
 
 def createcache():
 
@@ -49,7 +50,10 @@ def searchsong(name):
         current_song_dict.update({'name': song['title']})
         current_song_dict.update({'artists': song['artists'][0]['name']})
         current_song_dict.update({'videoId': song['videoId']})
-        
+        current_song_dict.update({'duration': song['duration']})
+        current_song_dict.update({'isExplicit': "(Explicit) - " if song['isExplicit'] else ""})
+
+
         songs_dict['songs'].append(current_song_dict)
 
     return songs_dict
@@ -62,7 +66,7 @@ def dmusic(videoId):
     yt = YouTube(videourl)
 
     #Filter stream
-    stream = yt.streams.filter(only_audio=True, file_extension="webm")[1]
+    stream = yt.streams.filter(only_audio=True, file_extension="webm").last()
     
     #Download stream
     stream.download(output_path="cache/")
