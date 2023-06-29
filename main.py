@@ -217,4 +217,4 @@ def main(page: ft.Page):
 
 
     
-ft.app(target=main, assets_dir="cache", view=ft.WEB_BROWSER)
+ft.app(target=main, assets_dir="cache", view=ft.WEB_BROWSER, port=8080)
