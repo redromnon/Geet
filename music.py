@@ -1,7 +1,6 @@
 from ytmusicapi import YTMusic
 from pytube import YouTube
 import os
-import json
 
 def createcache():
 
@@ -19,11 +18,11 @@ def getaudio():
     if len(os.listdir(path)) != 0:
         for file in os.listdir(path):
             print("Found ", file)
-            return os.path.join("cache", file)
-    
+            return file
+
     else:
         print("No audio file found")
-        return ""
+        return "fake.mp4"
         
 
 def resetcache():
@@ -66,7 +65,7 @@ def dmusic(videoId):
     yt = YouTube(videourl)
 
     #Filter stream
-    stream = yt.streams.filter(only_audio=True, file_extension="mp4").first()
+    stream = yt.streams.filter(only_audio=True, file_extension="webm").first()
     
     #Download stream
     stream.download(output_path="cache/")

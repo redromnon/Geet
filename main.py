@@ -31,7 +31,7 @@ def main(page: ft.Page):
 
         #Download via videoId, set the new song src & display duration
         music.dmusic(e.control.data[2])
-        song.src = url + music.getaudio()
+        song.src = music.getaudio()
         
         #Update music player
         current_song.title = ft.Text(e.control.data[0], max_lines=2, overflow="ellipsis", color=ft.colors.WHITE)
@@ -39,7 +39,7 @@ def main(page: ft.Page):
         
         #Auto-Play the song
         if page.platform != "ios" and page.platform != "macos":
-            song.play()
+            song.autoplay = True
             playpausebtn.icon = ft.icons.PAUSE_CIRCLE_ROUNDED
 
         #Update music player
@@ -114,15 +114,15 @@ def main(page: ft.Page):
 
     def track_progress(e):
 
-        duration_progress.value = int(e.data)/song.get_duration()
-        page.update()
+        if song.get_duration() != 0:
+            duration_progress.value = int(e.data)/song.get_duration()
+            page.update()
 
 
     #UI COMPONENTS
     
     #Audio
-    url = "../"
-    song = ft.Audio(src=url+music.getaudio(), autoplay=False, on_state_changed=checkstatus, on_position_changed=track_progress)
+    song = ft.Audio(src=music.getaudio(), autoplay=False, on_state_changed=checkstatus, on_position_changed=track_progress)
     page.overlay.append(song)
     
 
